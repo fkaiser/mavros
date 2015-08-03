@@ -38,7 +38,7 @@ public:
 	{
 		uas = &uas_;
 
-		cam_imu_pub = cam_imu_sync_nh.advertise<mavros_extras::CamIMUStamp>("cam_imu_stamp", 10);
+		cam_imu_pub = cam_imu_sync_nh.advertise<mavros_extras::CamIMUStamp>("cam_imu_stamp", 1000);
 	}
 
 	const message_map get_rx_handlers() {
@@ -63,6 +63,7 @@ private:
 		sync_msg->frame_seq_id = ctrig.seq;
 
 		cam_imu_pub.publish(sync_msg);
+		ROS_INFO("Sent timestamp %u.%u:",sync_msg->frame_stamp.sec,sync_msg->frame_stamp.nsec);
 	}
 };
 };	// namespace mavplugin
